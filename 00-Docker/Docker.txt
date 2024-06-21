@@ -1,0 +1,46 @@
+Resumo sobre Docker
+
+Docker
+
+O que é o Docker?
+
+Pode-se dizer que o Docker, é uma plataforma que facilita o desenvolvimento. Utilizando Docker, não há a necessidade de configurar o ambiente para o desenvolvimento, pois é como se eu já estivesse baixando esse ambiente, com tudo configurado. Esse ambiente é chamado de Container.
+
+
+Comandos mais utilizados no Docker:
+
+
+docker version -> comando responsável por verificar a versão atual do Docker que está na minha máquina.
+
+
+docker info -> comando responsável por mostrar informações em relação ao Docker host.
+
+
+docker build -t getting-started -> comando responsável por criar uma imagem do ambiente de desenvolvimento (container).
+
+
+docker pull -> comando responsável por baixar essa imagem.
+
+
+docker images -> verificar todas as imagens baixadas na minha máquina.
+
+
+docker run -dp -> comando responsável por rodar a imagem que foi baixada.
+
+
+docker rmi -> comando responsável por remover uma imagem baixada.
+
+
+docker ps ->  comando que lista todos os containers ativos.
+
+
+docker ps -a -> comando que lista todos os containers inativos.
+
+
+docker rename -> comando que altera o nome do container.
+ 
+
+docker rm -> comando que remove um container da máquina.
+
+
+ 

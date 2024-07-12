@@ -1,14 +1,9 @@
 package task05.src.Model;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-
 public class Jogador extends Pessoa {
     private int tentativasRestantes;
 
-    Scanner sc = new Scanner(System.in);
+    private Integer idJogador;
 
 
     public Jogador(String nome) {
@@ -16,6 +11,17 @@ public class Jogador extends Pessoa {
         this.tentativasRestantes = 6;
     }
 
+    public void setIdJogador(Integer idJogador) {
+        this.idJogador = idJogador;
+    }
+
+    public Integer getIdJogador() {
+        return idJogador;
+    }
+
+    public Jogador() {
+        super();
+    }
 
     public int getTentativasRestantes() {
         return tentativasRestantes;
@@ -25,4 +31,12 @@ public class Jogador extends Pessoa {
         this.tentativasRestantes = tentativasRestantes;
     }
 
+
+
+    @Override
+    public String toString() {
+        return  "------------------------\n" +
+                "ID: " + idJogador + " | Nome: " + getNome() + "\n" +
+                "------------------------";
+    }
 }

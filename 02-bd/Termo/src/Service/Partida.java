@@ -3,13 +3,18 @@ package task05.src.Service;
 import task05.src.Model.Jogador;
 import task05.src.Model.PalavraSecreta;
 import task05.src.Model.Teclado;
+import task05.src.repository.RankingRepository;
+import task05.src.repository.PalavrasRepository;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Partida {
 
     private Jogador jogador;
     private PalavraSecreta palavraSecreta;
+    private PalavrasRepository palavraBD;
     private Teclado teclado;
     private int contadorVitorias;
     private int contadorDerrotas;
@@ -17,6 +22,7 @@ public class Partida {
     Cores cores;
 
     Scanner scanner = new Scanner(System.in);
+    RankingService rankingService = new RankingService();
 
     public Partida(Jogador jogador) {
         this.jogador = jogador;
@@ -29,8 +35,12 @@ public class Partida {
 
     // Método para iniciar a partida
     public void iniciar() throws Exception {
+
         boolean continuarJogando = true;
+
         Progresso progresso = new Progresso(jogador.getNome());
+        progresso.setIdJogador(jogador.getIdJogador());
+
         while (continuarJogando){
             palavraSecreta = PalavraSecreta.sortearPalavraSecreta();
             teclado.resetarTeclado();
@@ -54,14 +64,21 @@ public class Partida {
         progresso.setVitorias(contadorVitorias);
         progresso.setDerrotas(contadorDerrotas);
         progresso.setPartidasJogo(jogadas);
-
-        System.out.println(" ");
-        System.out.println(" _____________________________________ ");
-        System.out.println("|              PROGRESSO              |");
-        System.out.println("|-------------------------------------|");
-        System.out.println("|Partida: "+jogadas+" | Derrota: "+contadorDerrotas+" | Vitória: "+contadorVitorias + " |");
-        System.out.println("|_____________________________________|");
-        System.out.println(" ");
+        rankingService.insertOrUpdateRanking(progresso);
+        RankingRepository res = new RankingRepository();
+        List<Map<String, Object>> rankings = res.listarRanking();
+        for (Map<String, Object> ranking : rankings) {
+            String nome = (String) ranking.get("NOME_JOGADOR");
+            if (nome.equals(jogador.getNome())) {
+                System.out.println(" ");
+                System.out.println(" _______________________________________ ");
+                System.out.println("|              PROGRESSO                |");
+                System.out.println("|---------------------------------------|");
+                System.out.println("|Partida: "+ranking.get("PARTIDAS_JOGADAS")+" | Derrota: "+ranking.get("DERROTAS")+" | Vitória: "+ranking.get("VITORIAS") + "  |");
+                System.out.println("|_______________________________________|");
+                System.out.println(" ");
+            }
+        }
     }
 
     public void realizarTentativa() throws Exception{
@@ -142,4 +159,5 @@ public class Partida {
         }
         System.out.println(resultado);
     }
+
 }

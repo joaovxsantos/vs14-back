@@ -1,19 +1,20 @@
 package task05.src;
 
 import task05.src.Model.Jogador;
+import task05.src.Service.OpcoesMenu;
 import task05.src.Service.Partida;
+import task05.src.Service.JogadorService;
 import task05.src.Service.Progresso;
+import task05.src.exceptions.BancoDeDadosException;
+import task05.src.repository.RankingRepository;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MenuJogo {
 
     private Jogador jogador;
-
+    JogadorService jogadorService = new JogadorService();
     Scanner sc = new Scanner(System.in);
-    private List<Jogador> jogadores = new LinkedList<>();
 
     public MenuJogo(Jogador jogadores) {
         this.jogador = jogadores;
@@ -27,33 +28,35 @@ public class MenuJogo {
 
         while (true) {
             exibirMenu();
-            int opcao = lerOpcao();
+            OpcoesMenu opcoesMenuEnum = OpcoesMenu.valueOf(lerOpcao());
 
-            switch (opcao) {
-                case 1:
+            switch (opcoesMenuEnum) {
+                case CADASTRAR_JOGADOR:
                     jogador = cadastrarJogador();
                     break;
-                case 2:
-                    if (jogador == null) {
-                        System.out.println("Não há nenhum jogador cadastrado.");
-                        break;
-                    }
+                case EDITAR_JOGADOR:
                     editarJogador();
                     break;
-                case 3:
+                case INSTRUCOES_JOGO:
                     InstrucoesJogo.mostrarInstrucoes();
                     break;
-                case 4:
-                    if (jogador == null) {
+                case INICIAR_PARTIDA:
+                    jogadorService.listar();
+                    System.out.println("Digite o id do jogador ou 0 para cadastrar um novo jogador");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    if (id == 0){
                         jogador = cadastrarJogador();
-                    };
-                    Partida partida = new Partida(buscarJogador());
+                    } else {
+                        jogador = jogadorService.buscarJogadorPorId(id);
+                    }
+                    Partida partida = new Partida(jogador);
                     partida.iniciar();
                     break;
-                case 5: //ranking
+                case RANKING: //ranking
                     desenharRanking();
                     break;
-                case 6:
+                case SAIR:
                     //sair
                     System.out.println(" ");
                     System.out.println("Saindo do jogo...");
@@ -102,34 +105,40 @@ public class MenuJogo {
             nome = sc.nextLine();
         } while (!isNomeValido(nome));
         Jogador novoJogador = new Jogador(nome);
-        jogadores.add(novoJogador);
+        jogadorService.adicionarJogador(novoJogador);
         System.out.println("\u001B[32m" + "Nome cadastrado com sucesso!" + "\u001B[0m");
         return new Jogador(nome);
     }
 
     public void editarJogador() {
-        Jogador jogador = buscarJogador();
+        System.out.println("Escolha o id da pessoa você deseja editar?");
+        jogadorService.listar();
+        int index = sc.nextInt();
+        sc.nextLine();
 
-        if(jogador != null) {
-            System.out.print("Jogador encontrado. Digite o novo nome: ");
-            String novoNome = sc.nextLine();
-            jogador.setNome(novoNome);
-            System.out.println("Nome atualizado para: " + novoNome);
+        if(jogadorService.buscarJogadorPorId(index) == null){
             System.out.println(" ");
+            System.out.println("\u001B[31m" + "Jogador não encontrado" + "\u001B[0m");
+            return;
         }
-    }
-    public  Jogador buscarJogador() {
-        System.out.print("Digite o nome do jogador: ");
-        String nome = sc.nextLine();
 
-        for (Jogador jogador : jogadores) {
-            if (jogador.getNome().equalsIgnoreCase(nome)) {
-                return jogador;
-            }
+        System.out.println("1 - Editar nome do jogador");
+        System.out.println("2 - Excluir jogador");
+
+        int opcao = sc.nextInt();
+        sc.nextLine();
+
+        if(opcao == 1){
+            System.out.println("Digite o novo nome do jogador: ");
+            Jogador jogadorEditado = new Jogador();
+            jogadorEditado.setNome(sc.nextLine());
+            jogadorService.editarJogador(index, jogadorEditado);
+        } else if(opcao == 2){
+            jogadorService.removerJogador(index);
+        } else {
+            System.out.println(" ");
+            System.out.println("\u001B[31m" + "Opção inválida" + "\u001B[0m");
         }
-        System.out.println(" ");
-        System.out.println("\u001B[31m" + "Jogador não encontrado" + "\u001B[0m");
-        return cadastrarJogador();
     }
 
     private boolean isNomeValido(String nome) {
@@ -148,18 +157,41 @@ public class MenuJogo {
         return true;
     }
 
-    public static void desenharRanking() {
-
-
-        List<Progresso> ranking =  Progresso.calcularRanking();
+    public static void desenharRanking() throws BancoDeDadosException {
+        RankingRepository res = new RankingRepository();
+        List<Map<String, Object>> rankings = res.listarRanking();
         System.out.println(" _____________________________________ ");
         System.out.println("|         RANKING DE JOGADORES        |");
         System.out.println("|-------------------------------------|");
         System.out.println("| Pos | Nome               | Vitórias |");
         System.out.println("|-------------------------------------|");
         int posicao = 1;
-        for (Progresso p : ranking) {
-            System.out.printf("|  %-3d| %-17s  |   %-6d |\n", posicao, p.getNome(), p.getVitorias());
+        List<Map<String, Integer>> jogadorRanking = new ArrayList<>();
+        for (Map<String, Object> r: rankings){
+            String nome = (String) r.get("NOME_JOGADOR");
+            int vitorias = (int) r.get("VITORIAS");
+
+            // Verifica se o jogador já está presente em jogadorRanking
+            boolean jogadorExistente = false;
+            for (Map<String, Integer> jogador : jogadorRanking) {
+                if (jogador.containsKey(nome)) {
+                    jogador.put(nome, jogador.get(nome) + vitorias);
+                    jogadorExistente = true;
+                    break;
+                }
+            }
+
+            // Se o jogador não existir, adiciona um novo mapa
+            if (!jogadorExistente) {
+                Map<String, Integer> jogadorInfo = new HashMap<>();
+                jogadorInfo.put(nome, vitorias);
+                jogadorRanking.add(jogadorInfo);
+            }
+        }
+
+        jogadorRanking.sort(Comparator.comparing(m -> m.get(m.keySet().iterator().next()), Comparator.reverseOrder()));
+        for (Map<String, Integer> p : jogadorRanking) {
+            System.out.printf("|  %-3d| %-17s  |   %-6d |\n", posicao, p.keySet().iterator().next(), p.get(p.keySet().iterator().next()));
             posicao++;
         }
         System.out.println("|_____________________________________|");

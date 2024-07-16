@@ -28,7 +28,7 @@ public class ContatoController {
         return contatoService.listByIdPessoa(idPessoa);
     }
 
-    @PostMapping("/pessoa/{idContato}")
+    @PostMapping
     public Contato create(@RequestBody Contato contato) {
         return contatoService.create(contato);
     }

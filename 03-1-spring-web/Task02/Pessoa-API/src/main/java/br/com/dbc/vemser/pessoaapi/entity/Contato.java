@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
-import java.time.LocalDate;
 
 public class Contato {
     private Integer idContato;
@@ -9,8 +8,7 @@ public class Contato {
     private String numero;
     private String descricao;
 
-    public Contato(int i, Integer idPessoa, LocalDate parse, String number) {
-    }
+
 
     public Contato(Integer idContato, Integer idPessoa, TipoContato tipoContato, String numero, String descricao) {
         this.idContato = idContato;
@@ -20,7 +18,9 @@ public class Contato {
         this.descricao = descricao;
     }
 
-    public Contato(int i, String maiconGerardi, LocalDate parse, String number) {
+
+
+    public Contato() {
     }
 
     public Integer getIdContato() {

@@ -14,9 +14,6 @@ public class ContatoService {
     }
 
     public Contato create(Contato contato){
-
-        // Validações
-
         return contatoRepository.create(contato);
     }
 
@@ -28,7 +25,6 @@ public class ContatoService {
                           Contato contatoAtualizar) throws Exception {
         Contato contatoRecuperado = getContato(id);
 
-        contatoRecuperado.setIdContato(contatoAtualizar.getIdContato());
         contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
         contatoRecuperado.setNumero(contatoAtualizar.getNumero());
         contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
@@ -52,6 +48,4 @@ public class ContatoService {
                 .orElseThrow(() -> new Exception("Contato não encontrado!"));
         return contatoRecuperado;
     }
-
-
 }

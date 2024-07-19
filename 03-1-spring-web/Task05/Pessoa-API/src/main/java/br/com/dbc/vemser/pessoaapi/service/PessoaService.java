@@ -1,54 +1,93 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
+import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDto;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDto;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaUpdateDto;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.excepction.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
+@Service
 public class PessoaService {
 
-    private PessoaRepository pessoaRepository;
+    private final PessoaRepository pessoaRepository;
 
-    public PessoaService(){
-        pessoaRepository = new PessoaRepository();
+    private final ObjectMapper objectMapper;
+
+
+    public PessoaService(PessoaRepository pessoaRepository, ObjectMapper objectMapper) {
+        this.pessoaRepository = pessoaRepository;
+        this.objectMapper = objectMapper;
+
     }
 
-    public Pessoa create(Pessoa pessoa){
+    public PessoaDto create(@Valid PessoaCreateDto pessoa) throws Exception {
 
-        // Validações
+        log.debug("Criando nova pessoa");
 
-        return pessoaRepository.create(pessoa);
+
+        Pessoa pessoaReturn = pessoaRepository.create(objectMapper.convertValue(pessoa, Pessoa.class));
+
+        return objectMapper.convertValue(pessoaReturn, PessoaDto.class);
+
     }
 
-    public List<Pessoa> list(){
-        return pessoaRepository.list();
+    public List<PessoaDto> list(){
+
+        List<Pessoa> pessoas = pessoaRepository.list();
+
+        return pessoas.stream()
+                .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDto.class))
+                .collect(Collectors.toList());
     }
 
-    public Pessoa update(Integer id,
-                         Pessoa pessoaAtualizar) throws Exception {
-        Pessoa pessoaRecuperada = getPessoa(id);
+    public PessoaDto update(Integer id, PessoaUpdateDto pessoaAtualizar) throws Exception {
 
-        pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
-        pessoaRecuperada.setNome(pessoaAtualizar.getNome());
-        pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
+        log.debug("Atualizando pessoa");
 
-        return pessoaRecuperada;
+        return objectMapper.convertValue(pessoaRepository.update(
+                objectMapper.convertValue(getPessoa(id), Pessoa.class).getIdPessoa(),
+                objectMapper.convertValue(pessoaAtualizar, Pessoa.class)), PessoaDto.class);
     }
 
     public void delete(Integer id) throws Exception {
-        Pessoa pessoaRecuperada = getPessoa(id);
-        pessoaRepository.delete(pessoaRecuperada);
+
+        log.debug("Deletando pessoa");
+
+        pessoaRepository.delete(objectMapper.convertValue(getPessoa(id), Pessoa.class));
     }
 
-    public List<Pessoa> listByName(String nome) {
-        return pessoaRepository.listByName(nome);
+    public List<PessoaDto> listByName(String nome) {
+
+        List<Pessoa> pessoas = pessoaRepository.listByName(nome);
+        List<PessoaDto> pessoaDtos = new ArrayList<>();
+        for (Pessoa pessoa : pessoas) {
+            pessoaDtos.add(objectMapper.convertValue(pessoa, PessoaDto.class));
+        }
+
+        return pessoaDtos;
+    }
+
+    public PessoaDto listById(Integer id) throws Exception {
+        return objectMapper.convertValue(getPessoa(id), PessoaDto.class);
     }
 
     private Pessoa getPessoa(Integer id) throws Exception {
         Pessoa pessoaRecuperada = pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não encontrada!"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada!"));
         return pessoaRecuperada;
     }
+
 }

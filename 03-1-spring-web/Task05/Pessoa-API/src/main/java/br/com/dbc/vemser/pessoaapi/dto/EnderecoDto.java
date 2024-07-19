@@ -1,16 +1,17 @@
-package br.com.dbc.vemser.pessoaapi.entity;
+package br.com.dbc.vemser.pessoaapi.dto;
 
+import br.com.dbc.vemser.pessoaapi.entity.TipoEndereco;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Endereco {
-    private Integer idPessoa;
+public class EnderecoDto {
+
     private Integer id;
+    private Integer idPessoa;
     private TipoEndereco tipo;
     private String logradouro;
     private Integer numero;

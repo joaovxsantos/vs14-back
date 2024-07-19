@@ -1,6 +1,5 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 
-import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.entity.TipoEndereco;
 import org.springframework.stereotype.Repository;
@@ -16,11 +15,11 @@ public class EnderecoRepository {
     private AtomicInteger COUNTER = new AtomicInteger();
 
     public EnderecoRepository() {
-        listaEnderecos.add(new Endereco(1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil", COUNTER.incrementAndGet()));
-        listaEnderecos.add(new Endereco(1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil", COUNTER.incrementAndGet()));
-        listaEnderecos.add(new Endereco(1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil", COUNTER.incrementAndGet()));
-        listaEnderecos.add(new Endereco(1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil", COUNTER.incrementAndGet()));
-        listaEnderecos.add(new Endereco(1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil", COUNTER.incrementAndGet()));
+        listaEnderecos.add(new Endereco(1, 1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil"));
+        listaEnderecos.add(new Endereco(1, 1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil"));
+        listaEnderecos.add(new Endereco(1, 1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil"));
+        listaEnderecos.add(new Endereco(1, 1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil"));
+        listaEnderecos.add(new Endereco(1, 1, TipoEndereco.RESIDENCIAL, "Rua", 108, "Fundos", "21341250", "Rio de Janeiro", "RJ", "Brasil"));
     }
 
     public Endereco create(Endereco endereco) {

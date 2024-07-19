@@ -1,2 +1,4 @@
-package br.com.dbc.vemser.pessoaapi.DTO;public class PessoaCreateDTO {
+package br.com.dbc.vemser.pessoaapi.dto;
+
+public class PessoaCreateDTO {
 }

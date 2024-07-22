@@ -19,13 +19,10 @@
                         </div>
 
                         <div style="font-size: 24px; color: #555100;">
-                            <br> Sending Email using Spring Boot with <b>FreeMarker
-                            template !!!</b> <br>
+                            <br>Olá ${nome}! Recebemos uma atualização no seu endereco! </b> <br>
                         </div>
                         <div>
-                            <br>"Sharing the knowledge is biggest learning" <br> <br>
-                            <br> <br> <b>Bem vindo ${nome}!</b>
-                            <br>
+                            <br> <br> <b>${nome} seu endereço foi atualizado com sucesso!</b>
                         </div>
                     </td>
                 </tr>

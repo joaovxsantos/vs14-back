@@ -15,16 +15,16 @@
                         style="background-color: #d3be6c; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; padding: 0px 15px 10px 15px;">
 
                         <div style="font-size: 48px; color:blue;">
-                            <b>Java Mail</b>
+                            <b>Email de Criação</b>
                         </div>
 
                         <div style="font-size: 24px; color: #555100;">
-                            <br> ${nome} Seu endereço foi deletado! </b> <br>
+                            <br> Olá! ${nome} Cadastramos seu novo endereço :) </b> <br>
                         </div>
                         <div>
-                            <br> <br> <b>${nome} seu endereço foi removido com sucesso!</b>
+                            <br> <br> <b>Bem vindo ${nome}!</b>
                             <br>
-                            <h1>Mas não se preocupe, seus dados continuam conosco!</h1>
+                            <h1>Seus dados de cadastro: </h1>
                             <ul>
                                 <li>Nome: ${nome}</li>
                                 <li>Data de nascimento: ${aniversario}</li>

@@ -1,10 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDto;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDto;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaUpdateDto;
-import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
-import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
+import br.com.dbc.vemser.pessoaapi.dto.*;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +53,16 @@ public class PessoaController {
     @GetMapping("/tem_contato")
     public ResponseEntity<List<PessoaDto>> listInContatos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws Exception {
         return new ResponseEntity<>(pessoaService.listInContatos(idPessoa), HttpStatus.OK);
+    }
+
+    @GetMapping("/pessoa-completo")
+    public ResponseEntity<List<PessoaTotalDto>> listEditada() throws Exception {
+        return new ResponseEntity<>(pessoaService.listTotal(), HttpStatus.OK);
+    }
+
+    @GetMapping("/pessoa-personalizado")
+    public ResponseEntity<List<PessoaRelatorioDto>> listTotal(@RequestParam(value = "id", required = false) Integer id) throws Exception {
+        return new ResponseEntity<>(pessoaService.listEditada(id), HttpStatus.OK);
     }
 
     @PostMapping

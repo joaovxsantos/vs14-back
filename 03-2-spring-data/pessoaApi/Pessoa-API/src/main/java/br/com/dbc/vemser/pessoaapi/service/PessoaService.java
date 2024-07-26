@@ -1,8 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDto;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDto;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaUpdateDto;
+import br.com.dbc.vemser.pessoaapi.dto.*;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.excepction.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
@@ -181,6 +179,17 @@ public class PessoaService {
                     return pessoaDTO;
                 })
                 .toList();
+    }
+
+    public List<PessoaRelatorioDto> listEditada(Integer id) throws Exception {
+        if (id != null) {
+            return pessoaRepository.listAllId(id);
+        }
+        return pessoaRepository.listAll();
+    }
+
+    public List<PessoaTotalDto> listTotal() {
+        return pessoaRepository.findAllRelatorio();
     }
 
     private PessoaDto convertDto(Pessoa pessoa) {

@@ -19,17 +19,17 @@ import java.util.stream.Collectors;
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleException(Exception exception,
-                                                  HttpServletRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", new Date());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("message", exception.getMessage());
-        System.out.println(exception.getMessage());
-        System.out.println(Arrays.toString(exception.getStackTrace()));
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Object> handleException(Exception exception,
+//                                                  HttpServletRequest request) {
+//        Map<String, Object> body = new LinkedHashMap<>();
+//        body.put("timestamp", new Date());
+//        body.put("status", HttpStatus.BAD_REQUEST.value());
+//        body.put("message", exception.getMessage());
+//        System.out.println(exception.getMessage());
+//        System.out.println(Arrays.toString(exception.getStackTrace()));
+//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+//    }
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,

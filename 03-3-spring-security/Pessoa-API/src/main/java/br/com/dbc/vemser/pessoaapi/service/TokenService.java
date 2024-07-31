@@ -1,17 +1,15 @@
-package br.com.dbc.vemser.pessoaapi.security;
+package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
-import br.com.dbc.vemser.pessoaapi.service.UsuarioService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Base64;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
 
@@ -27,7 +25,6 @@ public class TokenService {
 
     @Value("${jwt.secret}")
     private String secret;
-    private final UsuarioService usuarioService;
 
 //    public String getToken(UsuarioEntity usuarioEntity) {
 //        String tokenTexto = usuarioEntity.getLogin() + ";" + usuarioEntity.getSenha(); // thiago.gomes;1234 > 923y978126391
@@ -59,7 +56,7 @@ public class TokenService {
 //        return usuarioService.findByLoginAndSenha(split[0], split[1]);
 //    }
 
-    public Optional<UsuarioEntity> isValid(String token) {
+    public UsernamePasswordAuthenticationToken isValid(String token) {
         if (token != null) {
             Claims body = Jwts.parser()
                     .setSigningKey(secret)
@@ -67,9 +64,11 @@ public class TokenService {
                     .getBody();
             String user = body.get(Claims.ID, String.class);
             if (user != null) {
-                return usuarioService.findById(Integer.valueOf(user));
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                        new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+                return usernamePasswordAuthenticationToken;
             }
         }
-        return Optional.empty();
+        return null;
     }
 }

@@ -1,7 +1,6 @@
-package br.com.dbc.vemser.pessoaapi.security;
+package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
-import br.com.dbc.vemser.pessoaapi.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

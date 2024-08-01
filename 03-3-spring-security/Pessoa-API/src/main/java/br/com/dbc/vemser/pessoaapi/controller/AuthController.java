@@ -1,6 +1,8 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.dto.LoginDTO;
+import br.com.dbc.vemser.pessoaapi.dto.UserCreateDto;
+import br.com.dbc.vemser.pessoaapi.dto.UserDto;
 import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
 import br.com.dbc.vemser.pessoaapi.excepction.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.TokenService;
@@ -43,11 +45,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public UsuarioEntity register(@RequestBody @Valid LoginDTO loginDTO) {
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
-        usuarioEntity.setLogin(loginDTO.getLogin());
-        usuarioEntity.setSenha(bCryptPasswordEncoder.encode(loginDTO.getSenha()));
-        return usuarioService.save(usuarioEntity);
+    public UserDto register(@RequestBody @Valid UserCreateDto userCreateDto) {
+        return usuarioService.create(userCreateDto);
     }
 
 

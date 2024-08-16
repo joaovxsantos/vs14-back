@@ -5,7 +5,9 @@ const operacao = document.querySelector('#operacao');
 
 btnCalc.addEventListener('click', () => {
 
-    const val1 = parseFloat(document.getElementById('val1').value);
+    // const val1 = parseFloat(document.getElementById('val1').value);
+    const val1 = Number(document.getElementById('val1').value);
+
     const val2 = parseFloat(document.getElementById('val2').value);
     const operacaoEscolhida = operacao.value;
     const textResutl = document.querySelector('#resultado');

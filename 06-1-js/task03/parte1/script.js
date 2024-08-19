@@ -10,6 +10,11 @@ buttonStart.addEventListener('click', () => {
     let index = 0;
 
     const intervalo = setInterval(() => {
+
+        if (index > nomesInput.length - 1) {
+            index = 0;
+        }
+
         tela.innerHTML = nomesInput[index]
         index = index + 1;
     }, velocidade)

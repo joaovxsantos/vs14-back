@@ -1,0 +1,60 @@
+section .sec-head {
+  position: relative;
+}
+
+section .img {
+  background: url(../../assets/wallpaper.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left center;
+  background-attachment: fixed;
+  filter: brightness(50%);
+  width: 100%;
+  height: 400px;
+}
+
+section .img img {
+  opacity: 0;
+}
+
+.sec-head .infos {
+  position: absolute;
+  top: 45%;
+  left: 22%;
+  transform: translate(-45%, -22%);
+  z-index: 1;
+  color: #ebe9ea;
+}
+
+.sec-head .infos h2 {
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+.infos .infos-text {
+  border-right: 2px solid white;
+  animation: piscar 1s linear infinite, escrever normal 5s steps(55) both;
+  max-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.infos .text2 {
+  border-right: 2px solid white;
+  animation: piscar 1s 5s linear infinite, escrever normal 5s 5s steps(55) both;
+  max-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@keyframes piscar {
+  100% {
+    border-right-color: transparent;
+  }
+}
+
+@keyframes escrever {
+  100% {
+    max-width: 100%;
+  }
+}

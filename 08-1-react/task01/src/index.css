@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+@media screen and (max-width: 1150px) {
+  header .img img {
+    opacity: 1;
+    width: 100%;
+    height: 400px;
+  }
+  main .container {
+    padding: 40px;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  .card {
+    width: 200px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .card {
+    width: 150px;
+  }
+
+  .sec-head .infos {
+    width: 300px;
+  }
+  .infos .infos-text,
+  .infos .text2 {
+    font-size: 11px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .sec-head .infos {
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .infos .infos-text,
+  .infos .text2 {
+    font-size: 11px;
+  }
+}
+
+@media screen and (min-width: 482px) and (max-width: 767px) {
+  .sec-head .infos {
+    width: 250px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .infos .infos-text,
+  .infos .text2 {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 481px) {
+  header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  header nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}

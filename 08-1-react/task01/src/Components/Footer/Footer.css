@@ -1,0 +1,17 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #181818;
+  padding: 20px;
+  color: #ebe9ea;
+  font-size: 17px;
+}
+
+footer .icons > * {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 24px;
+}

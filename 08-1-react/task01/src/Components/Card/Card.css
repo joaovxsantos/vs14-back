@@ -1,0 +1,22 @@
+.card {
+  background: #ebe9ea;
+  width: 250px;
+  transition: all 1s ease;
+}
+
+.card p {
+  text-align: center;
+  padding: 10px;
+  color: #313131;
+}
+
+.images img {
+  width: 100%;
+  padding: 25px;
+  cursor: pointer;
+  transition: all 1s ease;
+}
+
+.images img:hover {
+  transform: scale(1.3);
+}
